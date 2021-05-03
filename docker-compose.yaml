@@ -1,0 +1,144 @@
+version: '3.3'
+
+networks:
+  frontend:
+  backend:
+  elastic:
+
+volumes:
+  node:
+    driver: local
+  mongodb:
+    driver: local
+
+services:
+  mongodb:
+    build:
+      context: ./docker/mongodb
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb:/var/lib/mongodb
+    networks:
+      - frontend
+      - backend
+    command: --bind_ip 0.0.0.0
+
+#  elasticsearch:
+#    build:
+#      context: ./docker/elasticsearch
+#      dockerfile: Dockerfile
+#    restart: always
+#    volumes:
+#      - elasticsearch:/usr/share/elasticsearch/data
+#    networks:
+#      - backend
+#      - elastic
+#    environment:
+#      ES_JAVA_OPTS: -Xms512m -Xmx512m
+#
+#  kibana:
+#    depends_on:
+#      - elasticsearch
+#    build:
+#      context: ./docker/kibana
+#      dockerfile: Dockerfile
+#    restart: always
+#    ports:
+#      - "5601:5601"
+#    networks:
+#      - frontend
+#      - elastic
+#
+#  wordpress:
+#    depends_on:
+#      - mysql
+#    build:
+#      context: ./docker/wordpress
+#      dockerfile: Dockerfile
+#    restart: always
+#    ports:
+#      - "8080:82"
+#    networks:
+#      - frontend
+#      - backend
+#    volumes:
+#      - wordpress:/var/www/html
+#    environment:
+#      WORDPRESS_DB_HOST: mysql
+#      WORDPRESS_DB_USER: ${DB_USERNAME}
+#      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+#      WORDPRESS_DB_NAME: wordpress
+#
+#  php-fpm:
+#    depends_on:
+#      - redis
+#      - mysql
+#      - minio
+#    build:
+#      context: ./docker/php-fpm
+#      dockerfile: Dockerfile
+#    restart: always
+#    ports:
+#      - "9002:9000"
+#    networks:
+#      - backend
+#      - elastic
+#    volumes:
+#      - ./:/var/www
+#
+#  nginx:
+#    depends_on:
+#      - php-fpm
+#    build:
+#      context: ./docker/nginx
+#      dockerfile: Dockerfile
+#    restart: always
+#    ports:
+#      - "81:81"
+#    volumes:
+#      - ./:/var/www
+#      - nginx:/var/log/nginx
+#    networks:
+#      - backend
+#      - frontend
+#    env_file:
+#      - .env
+#
+#  redis:
+#    build:
+#      context: ./docker/redis
+#      dockerfile: Dockerfile
+#    networks:
+#      - backend
+#    restart: always
+#    volumes:
+#      - redis:/data
+#
+#  minio:
+#    build:
+#      context: ./docker/minio
+#      dockerfile: Dockerfile
+#    ports:
+#      - "9000:9000"
+#    networks:
+#      - frontend
+#      - backend
+#    restart: always
+#    volumes:
+#      - minio:/data
+#
+#  ubuntu:
+#    build:
+#      context: ./docker/custom
+#      dockerfile: Dockerfile
+#    ports:
+#      - "80:80"
+#    networks:
+#      - frontend
+#      - backend
+#    restart: always
+#    volumes:
+#      - redis:/data

@@ -17,8 +17,6 @@ const userSchema = new mongoose.Schema({
     age: Number
 });
 
-
-
 const experienceSchema = new mongoose.Schema({
     from: String,
     to: String,
