@@ -6,7 +6,7 @@ const curriculumController = require('../controllers/curriculum');
 const emailController = require('../controllers/email');
 
 // MongoDB URL
-const dbHost = 'mongodb+srv://emanuel:m1a9n3o4@verardi0-7vk6j.gcp.mongodb.net/verardi?retryWrites=true&w=majority';
+const dbHost = 'mongodb://mongodb:27017/verardi?retryWrites=true&w=majority';
 
 // Connect to mongodb
 mongoose.connect(dbHost, { useNewUrlParser: true });

@@ -26,6 +26,21 @@ services:
       - backend
     command: --bind_ip 0.0.0.0
 
+  node:
+    depends_on:
+      - mongodb
+    build:
+      context: ./docker/node
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "3000:3000"
+    networks:
+      - backend
+      - elastic
+    volumes:
+      - ./:/app
+
 #  elasticsearch:
 #    build:
 #      context: ./docker/elasticsearch
