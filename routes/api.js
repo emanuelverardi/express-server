@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
+require('dotenv').config();
 
 const curriculumController = require('../controllers/curriculum');
 const emailController = require('../controllers/email');
 
 // MongoDB URL
-const dbHost = 'mongodb://mongodb:27017/verardi?retryWrites=true&w=majority';
+const dbHost = process.env.mongoDbHost;
 
 // Connect to mongodb
 mongoose.connect(dbHost, { useNewUrlParser: true });
